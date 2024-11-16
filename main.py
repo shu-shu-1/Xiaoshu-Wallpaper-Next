@@ -2,7 +2,7 @@
 Author: shu-shu-1 3458222@qq.com
 Date: 2024-10-26 17:07:33
 LastEditors: shu-shu-1 3458222@qq.com
-LastEditTime: 2024-11-16 13:57:33
+LastEditTime: 2024-11-16 16:49:13
 FilePath: \A小树壁纸\7.0\main.py
 Description: 
 
@@ -16,8 +16,8 @@ import threading
 import time
 from qfluentwidgets import *
 from qfluentwidgets import FluentIcon as FIF
-from PySide6.QtWidgets import QApplication,QHBoxLayout,QFrame,QSystemTrayIcon,QLabel
-from PySide6.QtGui import QIcon,QFont,QPixmap
+from PySide6.QtWidgets import *
+from PySide6.QtGui import *
 from PySide6.QtCore import *
 from ui_Next import Ui_Start
 import sys
@@ -136,31 +136,35 @@ class MainWindow(QFrame):
 
         # 使用ui文件导入定义界面类
         self.ui = Ui_Start()
-        # self.ui.spinner = IndeterminateProgressRing(self)
 
-        # 调整大小
-        # self.ui.spinner.setFixedSize(30, 30)
 
-        # # 调整厚度
-        # self.ui.spinner.setStrokeWidth(4)
-        # self.ui.spinner.setGeometry(QRect(50, 350, 30, 30))
+        self.ui.setupUi(self)
 
+        self.setObjectName("home")
+
+        
+class TodayWidget(QFrame):
+
+    def __init__(self):
+        super().__init__()
         self.ring = ProgressRing(self)
         # 设置进度环取值范围和当前值
         self.ring.setRange(0, 110)
         self.ring.setValue(0)
-        self.ring.setGeometry(QRect(50, 350, 30, 30))
+        self.ring.setGeometry(QRect(50, 50, 30, 30))
         self.ring.setFixedSize(30, 30)
         self.ring.setStrokeWidth(4)
 
 
-        self.ui.infolabel = QLabel(self)
-        self.ui.infolabel.setGeometry(QRect(100, 350, 200, 30))
-        self.ui.infolabel.setText("正在从壁纸源获取数据...")
+        self.infolabel = QLabel(self)
+        self.infolabel.setGeometry(QRect(50, 100, 700, 130))
+        self.infolabel.setAlignment(Qt.AlignLeft | Qt.AlignTop) # 左对齐   
+        self.infolabel.setText("正在从壁纸源获取数据...")
+        self.infolabel.setWordWrap(True)  # 启用自动换行
         font1 = QFont()
-        font1.setFamilies([u"\u971e\u9e5c\u65b0\u6670\u9ed1"])
-        font1.setPointSize(12)
-        self.ui.infolabel.setFont(font1)
+        font1.setFamilies([u"微软雅黑"])
+        font1.setPointSize(11)
+        self.infolabel.setFont(font1)
 
         self.today_view = ImageLabel(self)
 
@@ -169,39 +173,38 @@ class MainWindow(QFrame):
 
         # 圆角
         self.today_view.setBorderRadius(8, 8, 8, 8)
-        self.today_view.setGeometry(QRect(0, 450, 200, 200))
+        self.today_view.setGeometry(QRect(50, 170, 200, 200))
 
 
-        self.ui.download_button = PushButton(text="开始下载", parent=self)
-        self.ui.download_button.setGeometry(QRect(300, 350, 100, 30))
-        self.ui.download_button.clicked.connect(self.start_download)
+        self.download_button = PushButton(text="获取数据", parent=self)
+        self.download_button.setGeometry(QRect(100, 50, 100, 30))
+        self.download_button.clicked.connect(self.start_download)
+        
 
-        self.ui.test_text = QLabel(self)
-        self.ui.test_text.setGeometry(QRect(0, 320, 300, 200))
-        self.ui.test_text.setWordWrap(True)  # 启用自动换行
-        self.ui.test_text.setText("数据获取中")
-        font1 = QFont()
-        font1.setFamilies([u"\u971e\u9e5c\u65b0\u6670\u9ed1"])
-        font1.setPointSize(12)        
 
-        self.ui.setupUi(self)
+        # self
 
-        self.setObjectName("home")
+
+
+        self.setObjectName("today")
+
+
+
     def start_download(self):
         self.download_thread = BingWallpaperThread()
         self.download_thread.finished.connect(self.on_download_finished)
         self.ring.setValue(1)
         self.download_thread.start()
 
-        Flyout.create(
-            icon=InfoBarIcon.SUCCESS,
-            title='测试启动成功',
-            content="任务已经开始执行",
-            target=self.ui.download_button,
-            parent=self,
-            isClosable=True,
-            aniType=FlyoutAnimationType.PULL_UP
-        )
+        # Flyout.create(
+        #     icon=InfoBarIcon.SUCCESS,
+        #     title='测试启动成功',
+        #     content="任务已经开始执行",
+        #     target=self.download_button,
+        #     parent=self,
+        #     isClosable=True,
+        #     aniType=FlyoutAnimationType.PULL_UP
+        # )
         
 
     def on_download_finished(self, success):
@@ -257,7 +260,7 @@ class MainWindow(QFrame):
                         duration=3000,
                         parent=self
                     )
-                    self.ui.test_text.setText(f"成功获取数据：{success[0]['url']}，格式：{format}")
+                    self.infolabel.setText(f"今日标题：{success[0]['title']}\n版权信息：{success[0]['copyright']}")
                 else:
                     # 处理请求失败的情况
                     InfoBar.error(
@@ -269,7 +272,7 @@ class MainWindow(QFrame):
                         duration=3000,
                         parent=self
                     )
-                    self.ui.test_text.setText("数据获取失败")
+                    self.infolabel.setText("数据获取失败")
                     self.ring.setValue(0)
             except Exception as e:
                 # 处理异常
@@ -282,7 +285,7 @@ class MainWindow(QFrame):
                     duration=3000,
                     parent=self
                 )
-                self.ui.test_text.setText("数据获取异常")
+                self.infolabel.setText("数据获取异常")
                 self.ring.setValue(0)
         else:
             # 处理 success 数据不正确的情况
@@ -295,14 +298,8 @@ class MainWindow(QFrame):
                 duration=3000,
                 parent=self
             )
-            self.ui.test_text.setText("数据获取失败")
+            self.infolabel.setText("数据获取失败")
             self.ring.setValue(0)
-        
-class TodayWidget(QFrame):
-
-    def __init__(self):
-        super().__init__()
-        
 class Window(FluentWindow):
     """ 主界面 """
 
@@ -310,7 +307,7 @@ class Window(FluentWindow):
         super().__init__()
 
         self.homeInterface = MainWindow()
-        self.todayInterface = Widget('每日一图', self)
+        self.todayInterface = TodayWidget()
         # self.videoInterface = Widget('Video Interface', self)
         self.settingInterface = Widget('Setting Interface', self)
         self.albumInterface = Widget('Album Interface', self)
@@ -394,6 +391,7 @@ class Window(FluentWindow):
             parent=self
         )
         self.splashScreen.finish()
+        
         
 
     def initWindow(self):
