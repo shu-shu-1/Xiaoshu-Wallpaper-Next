@@ -1,5 +1,5 @@
 <p align="center">
-    <b>他の言語で読む: <a href="README.md">英語</a>, <a href="README_zh.md">中文</a>, <a href="README_ja.md">日本語 (現在)</a>, <a href="README_fr.md">Français</a></b>
+    <b>Read this in other languages: <a href="README.md">English</a>, <a href="README_zh.md">中文</a>, <a href="README_ja.md">日本語 (現在)</a>, <a href="README_fr.md">Français</a></b>
 </p>
 
 > [!WARNING]
