@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Start</class>
+ <widget class="QWidget" name="Start">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>791</width>
+    <height>536</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>小树壁纸 Next</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="Next.qrc">
+    <normaloff>:/icon/icon.png</normaloff>:/icon/icon.png</iconset>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>90</y>
+     <width>301</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>霞鹜新晰黑</family>
+     <pointsize>24</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>小树壁纸 Next</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>90</y>
+     <width>101</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>霞鹜新晰黑</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>α test</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>40</y>
+     <width>61</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="Next.qrc">:/icon/icon.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>180</y>
+     <width>201</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>霞鹜新晰黑</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>从左侧选择一个页面以开始</string>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="Next.qrc"/>
+ </resources>
+ <connections/>
+</ui>
